@@ -23,7 +23,7 @@ async def detect_objects(file: UploadFile = File(...)):
     # Read image from uploaded file
     image_bytes = await file.read()
     image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
-    draw = ImageDraw.Draw(image)
+    #draw = ImageDraw.Draw(image)
 
     # Run YOLOv8 detection
     results = model(image)[0]
@@ -54,11 +54,11 @@ async def detect_objects(file: UploadFile = File(...)):
             draw.text((x1, y1 - 15), label, fill="green", font=font)
 '''
     # Save annotated image
-    unique_id = uuid.uuid4().hex[:6]
+'''    unique_id = uuid.uuid4().hex[:6]
     filename = f"detected_{unique_id}.jpg"
     output_path = os.path.join("outputs", filename)
     image.save(output_path)
-
+'''
     # Return JSON response
     return JSONResponse(content={
         "counts": counts   })
